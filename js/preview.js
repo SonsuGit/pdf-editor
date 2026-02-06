@@ -4,7 +4,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 
 // Render a single page thumbnail onto a canvas
 async function renderPageThumb(pdfBytes, pageNum, canvas) {
-  const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
+  const pdf = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
   const page = await pdf.getPage(pageNum);
   const viewport = page.getViewport({ scale: 0.3 });
   canvas.width = viewport.width;
@@ -19,7 +19,7 @@ async function renderPageThumb(pdfBytes, pageNum, canvas) {
 // Returns the number of pages
 async function renderAllThumbs(pdfBytes, container, options = {}) {
   const { onClick, labelPrefix, startSelected } = options;
-  const pdf = await pdfjsLib.getDocument({ data: pdfBytes }).promise;
+  const pdf = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
   const numPages = pdf.numPages;
 
   for (let i = 1; i <= numPages; i++) {
